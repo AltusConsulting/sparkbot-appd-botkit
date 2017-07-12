@@ -9,7 +9,7 @@
 // Load env variables 
 var env = require('node-env-file');
 env(__dirname + '/.env');
-var appd = require('./appd.js');
+var AppD = require('./appd.js');
 
 
 //
@@ -68,13 +68,15 @@ String.prototype.format = function() {
     });
 };
 
+var appdController = AppD();
+
 // Start Bot API
 controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
     controller.createWebhookEndpoints(webserver, bot, function() {
         console.log("Cisco Spark: Webhooks set up!");
     });
 
-    appd().createNotificationEndpoint(webserver, bot, function() {
+    appdController.createNotificationEndpoint(webserver, bot, function() {
         console.log("AppDynamics: Notification endpoints set up!");
     });
 
@@ -82,35 +84,6 @@ controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
     webserver.get('/ping', function(req, res) {
         res.json(bot.commons);
     });
-
-    // Endpoint for AppD's notifications
-    // webserver.post('/appd', function(req, res) {
-    //     res.sendStatus(200);
-    //     //controller.handleWebhookPayload(req, res, bot);
-    //     console.log("Received notification from AppD!");
-    //     console.log(req.body[0].app);
-    //     //Temporary hard-coded personId of rcampos@altus.cr for testing purposes
-    //     var personId = "Y2lzY29zcGFyazovL3VzL1BFT1BMRS9lMmRiYzJlNC01NDgyLTQ5N2YtYTFjNS02NzM3NjYzNWNiNzg";
-    //     //Temporary hard-coded AppDynamics demo account 
-    //     var account = "asteroids2017070703100120"
-    //     var app_url_tpl = "https://{}.saas.appdynamics.com/controller/?accountName={}#/location=APP_DASHBOARD&application={}"
-    //     var msg = "* A [{}]({}) has occurred in application [{}]({}) ({}).<br/>Time of event: *{}*.<br/>Affected Tier: **{}**.<br/>Affected Node: **{}**."
-
-    //     bot.startPrivateConversationWithPersonId(personId, function(err, convo) {
-    //         convo.say("### AppDynamics Notification");
-    //         for (var i = 0; i < req.body.length; i++) {
-    //             app_url = app_url_tpl.format(account, account, req.body[i].appid)
-    //             convo.say(msg.format(req.body[i].name,
-    //                 req.body[i].deeplink,
-    //                 req.body[i].app,
-    //                 app_url,
-    //                 req.body[i].appid,
-    //                 req.body[i].time,
-    //                 req.body[i].tier,
-    //                 req.body[i].node));
-    //         };
-    //     });
-    // });
 
     console.log("Cisco Spark: healthcheck available at: " + bot.commons.healthcheck);
 });
