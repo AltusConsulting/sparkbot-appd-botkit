@@ -10,6 +10,7 @@
 var env = require('node-env-file');
 env(__dirname + '/.env');
 var AppD = require('./lib/appd.js');
+var storage = require('./lib/storage.js')
 
 
 //
@@ -42,7 +43,7 @@ var controller = Botkit.sparkbot({
     ciscospark_access_token: process.env.SPARK_TOKEN,
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')'),
-    json_file_store: './jfs'
+    storage: storage({ path: './jfs' })
 });
 
 var bot = controller.spawn({});
