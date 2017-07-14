@@ -4,7 +4,7 @@
   Add a new HTTP Request Template at https://<APPD_ACCOUNT>.saas.appdynamics.com/controller/?accountName=<APPD_ACCOUNT>#/location=ALERT_RESPOND_HTTP_ACTION_PLAN_LIST
   with the following parameters:
   - Method: POST
-  - Raw URL: http://<PUBLIC_URL>/appd where PUBLIC_URL is the Internet facing URL where the bot is reached, as defined in /.env
+  - Raw URL: http://<PUBLIC_URL>/appd where PUBLIC_URL is the Internet facing URL where the bot can be reached, as defined in your environment variables
   - URL Encoding: UTF-8
   - Authentication: NONE
   - MIME Type: application/json

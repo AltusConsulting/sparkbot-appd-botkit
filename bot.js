@@ -9,7 +9,7 @@
 // Load env variables 
 var env = require('node-env-file');
 env(__dirname + '/.env');
-var AppD = require('./appd.js');
+var AppD = require('./lib/appd.js');
 
 
 //
@@ -68,7 +68,9 @@ String.prototype.format = function() {
     });
 };
 
-var appdController = AppD();
+var appdController = AppD.notifications({
+    account: process.env.APPD_ACCOUNT
+});
 
 // Start Bot API
 controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
