@@ -1,6 +1,6 @@
 module.exports = function(controller) {
 
-    controller.hears(['subscribe|sub'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['^sub'], 'direct_message,direct_mention', function(bot, message) {
 
         bot.createConversation(message, function(err, convo) {
 
@@ -22,6 +22,7 @@ module.exports = function(controller) {
                     controller.storage.subscriptions.save({ id: type, users: users }, function(err) {});
                 });
             }
+
             convo.ask("What type of notifications do you want to subscribe to? (INFO/WARN/ERROR)", [{
                 pattern: "INFO|info|Info",
                 callback: function(response, convo) {
@@ -53,11 +54,11 @@ module.exports = function(controller) {
         });
     });
 
-    controller.hears(['unsubscribe|unsub'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['^unsub'], 'direct_message,direct_mention', function(bot, message) {
 
         bot.createConversation(message, function(err, convo) {
 
-            function unsubscribeToNotification(type, user) {
+            function unsubscribeFromNotification(type, user) {
                 controller.storage.subscriptions.get(type, function(err, subscription_data) {
                     if (subscription_data) {
                         users = subscription_data.users;
@@ -76,19 +77,19 @@ module.exports = function(controller) {
             convo.ask("What type of notifications do you want to unsubscribe from? (INFO/WARN/ERROR)", [{
                 pattern: "INFO|info|Info",
                 callback: function(response, convo) {
-                    unsubscribeToNotification('info', message.user);
+                    unsubscribeFromNotification('info', message.user);
                     convo.next();
                 },
             }, {
                 pattern: "WARN|warn|Warn",
                 callback: function(response, convo) {
-                    unsubscribeToNotification('warn', message.user);
+                    unsubscribeFromNotification('warn', message.user);
                     convo.next();
                 },
             }, {
                 pattern: "ERROR|error|Error",
                 callback: function(response, convo) {
-                    unsubscribeToNotification('error', message.user);
+                    unsubscribeFromNotification('error', message.user);
                     convo.next();
                 },
             }, {
@@ -103,4 +104,33 @@ module.exports = function(controller) {
             convo.activate();
         });
     });
+
+    controller.hears(['^show sub'], 'direct_message,direct_mention', function(bot, message) {
+
+        bot.createConversation(message, function(err, convo) {
+
+            controller.storage.subscriptions.all(function(err, subscription_data) {
+                if (subscription_data) {
+                    var list = "";
+                    subscription_data.forEach(function(sub) {
+                        console.log(typeof(sub.users[0]));
+                        sub.users.forEach(function(user) {
+                            if (message.user == user) {
+                                list += "`{}`<br/>".format(sub.id);
+                            }
+                        });
+                    });
+                    if (list == "") {
+                        convo.say("You don't have any active subscriptions.");
+                    } else {
+                        convo.say("You're currently subscribed to the following notifications:<br/>" + list);
+                    }
+                }
+            });
+
+            convo.activate();
+        });
+    });
+
+
 };
