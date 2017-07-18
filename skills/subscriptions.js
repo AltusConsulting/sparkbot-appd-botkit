@@ -113,7 +113,6 @@ module.exports = function(controller) {
                 if (subscription_data) {
                     var list = "";
                     subscription_data.forEach(function(sub) {
-                        console.log(typeof(sub.users[0]));
                         sub.users.forEach(function(user) {
                             if (message.user == user) {
                                 list += "`{}`<br/>".format(sub.id);

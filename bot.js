@@ -10,7 +10,7 @@
 var env = require('node-env-file');
 env(__dirname + '/.env');
 var AppD = require('./lib/appd.js');
-var storage = require('./lib/storage.js')
+var storage = require('./lib/storage.js');
 
 
 //
