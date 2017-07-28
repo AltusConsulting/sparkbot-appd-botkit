@@ -99,3 +99,57 @@ or, for short:
 show sub
 ```
 
+## Configuring your AppD server 
+
+In order for notifications to be sent to your bot, you need to configure your AppD server accordingly. Here are the steps:
+
+### 1. Create an __HTTP Request Template__.
+
+* Navigate to _Alert & Respond_ -> _HTTP Request Templates_.
+* Select _New_ to create a new template.
+- Fill the information as follows:
+    - **Name**: Something like "Sparkbot" or "Cisco Spark"
+    - **Method**: POST
+    - **Raw URL**: http://<PUBLIC_URL>/appd where PUBLIC_URL is the Internet facing URL where the bot can be reached, as defined in your environment variables
+    - **URL Encoding**: UTF-8
+    - **Authentication**: NONE
+    - **MIME Type**: application/json
+    - **Payload encoding**: UTF-8
+    - **Payload**:
+    ```
+    [
+    #foreach(${event} in ${fullEventList})
+        #set( $msg = $event.summaryMessage.replace("
+    ", "\\n") )
+        {"app": "${event.application.name}",
+        "appid": "${event.application.id}",
+        "tier": "${event.tier.name}",
+        "node": "${event.node.name}",
+        "time": "${event.eventTime}",
+        "deeplink": "${event.deepLink}",
+        "name": "${event.displayName}",
+        "severity": "${event.severity}",
+        "message": "${msg}"}
+        #if($velocityCount != $fullEventList.size()) , #end
+    #end
+    ]
+    ```
+
+### 2. Create an __Action__.
+
+* Navigate to _Alert & Respond_ -> _Actions_.
+* Select _Create_ to create a new action.
+* Select _HTTP Request_ -> _Make an HTTP Request_ and the press OK.
+* Assign a name to the request. It can be something like "Cisco Spark Bot"
+* From the _HTTP Request Template_ dropdown list select the template created in the previous step.
+
+### 3. Create a __Policy__.
+
+* Navigate to _Alert & Respond_ -> _Policies_.
+* Select _Create_ to create a new policy.
+* Assign a name to your policy.
+* Select the _Health Rule Violation Events_ and/or _Other Events_ you want to be notified about, depending on your needs.
+* Press _Next_
+* In _Actions to Execute_ press the plus (+) sign and then select the action you created in the previous step. Press _Select_.
+
+Now you should begin receiving notifications from the AppD Bot on Cisco Spark, once you subscribe to them.
