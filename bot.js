@@ -70,7 +70,8 @@ String.prototype.format = function() {
 };
 
 var appdController = AppD.notifications({
-    account: process.env.APPD_ACCOUNT
+    account: process.env.APPD_ACCOUNT,
+    storage: controller.storage
 });
 
 // Start Bot API
