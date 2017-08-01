@@ -93,10 +93,10 @@ controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
 });
 
 // Load skills
-var normalizedPath = require("path").join(__dirname, "skills");
+var normalizedPath = require("path").join(__dirname, "lib/skills");
 require("fs").readdirSync(normalizedPath).forEach(function(file) {
     try {
-        require("./skills/" + file)(controller);
+        require("./lib/skills/" + file)(controller);
         console.log("Cisco Spark: loaded skill: " + file);
     } catch (err) {
         if (err.code == "MODULE_NOT_FOUND") {
