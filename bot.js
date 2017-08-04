@@ -36,7 +36,7 @@ if (!process.env.PUBLIC_URL) {
 }
 
 var env = process.env.NODE_ENV || "development";
-var redisConfig = { "methods": ['subscriptions'] };
+var redisConfig = { "methods": ['subscriptions'], "url": process.env.REDIS_URL };
 var redisStorage = require('botkit-storage-redis')(redisConfig);
 
 var controller = Botkit.sparkbot({
