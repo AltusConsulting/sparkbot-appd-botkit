@@ -36,6 +36,8 @@ if (!process.env.PUBLIC_URL) {
 }
 
 var env = process.env.NODE_ENV || "development";
+var redisConfig = { "methods": ['subscriptions'] };
+var redisStorage = require('botkit-storage-redis')(redisConfig);
 
 var controller = Botkit.sparkbot({
     log: true,
@@ -43,7 +45,7 @@ var controller = Botkit.sparkbot({
     ciscospark_access_token: process.env.SPARK_TOKEN,
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')'),
-    storage: storage({ path: './jfs' })
+    storage: redisStorage
 });
 
 var bot = controller.spawn({});
