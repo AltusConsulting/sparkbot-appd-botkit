@@ -17,7 +17,7 @@
   "dependencies": {
   "engines": {
     "node": "8.2.1"
-   }
+   },
     "botkit": "0.5.6",
     "botkit-storage-redis": "^1.1.0",
     "node-env-file": "0.1.8"
