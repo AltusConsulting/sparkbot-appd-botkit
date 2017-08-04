@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node bot.js"
+  } ,
   "name": "sparkbot-appd-botkit",
   "description": "Cisco Spark notification bot for AppDynamics using BotKit",
   "version": "0.0.1",
