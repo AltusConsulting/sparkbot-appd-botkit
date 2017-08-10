@@ -2,6 +2,12 @@
 
 Inspired by [BotKit samples for Cisco Spark](https://github.com/CiscoDevNet/botkit-ciscospark-samples) by Stève Sfartz <mailto:stsfartz@cisco.com>
 
+## Heroku deployment
+
+Click below to quickly deploy the bot to Heroku. You will need your Spark token, AppDynamics account name and Public URL (see [How to run](#how-to-run) section below for details). 
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## How to run 
 
 1. Create a Bot Account from the ['Spark for developers' bot creation page](https://developer.ciscospark.com/add-bot.html), and copy your bot's access token.

@@ -1,0 +1,20 @@
+{
+    "name": "sparkbot-appd-botkit",
+    "description": "Runs a Cisco Spark bot on Heroku.",
+    "keywords": ["ciscospark", "chatbot", "botkit"],
+    "repository": "https://github.com/AltusConsulting/sparkbot-appd-botkit.git",
+    "env": {
+        "APPD_ACCOUNT": {
+            "description": "Your AppDynamics account name. The subdomain of 'saas.appdynamics.com' in the URL of the SaaS version"
+        },
+        "PUBLIC_URL": {
+            "description": "Internet facing URL where your bot can be reached."
+        },
+        "SPARK_TOKEN": {
+            "description": "The API access token of your Cisco Spark bot."
+        }
+    },
+    "addons": [
+        "heroku-redis:hobby-dev"
+    ]
+}
