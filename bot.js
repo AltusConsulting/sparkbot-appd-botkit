@@ -50,6 +50,7 @@ var controller = Botkit.sparkbot({
 
 var bot = controller.spawn({});
 
+
 // Load BotCommons properties
 bot.commons = {};
 bot.commons["healthcheck"] = process.env.PUBLIC_URL + "/ping";
