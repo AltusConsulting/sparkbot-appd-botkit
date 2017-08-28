@@ -2,6 +2,14 @@
 
 Inspired by [BotKit samples for Cisco Spark](https://github.com/CiscoDevNet/botkit-ciscospark-samples) by Stève Sfartz <mailto:stsfartz@cisco.com>
 
+## Instructions for deployment
+
+Either if you deploy locally or to Heroku, you'll need to perform these two tasks first:
+
+1. Create a Bot Account from the ['Spark for developers' bot creation page](https://developer.ciscospark.com/add-bot.html), and copy your bot's access token.
+
+1. Create an AppDynamics account if you don't already have one and copy your AppD account name (TIP: for SaaS deployments, the account name is what comes before "saas.appdynamics.com" in the URL).
+
 ## Heroku deployment
 
 Click below to quickly deploy the bot to Heroku. You will need the following information:
@@ -11,15 +19,13 @@ Click below to quickly deploy the bot to Heroku. You will need the following inf
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-## How to run 
+## Local deployment
 
-1. Create a Bot Account from the ['Spark for developers' bot creation page](https://developer.ciscospark.com/add-bot.html), and copy your bot's access token.
-
-1. Create an AppDynamics account if you don't already have one and copy your AppD account name (TIP: for SaaS deployments, the account name is what comes before "saas.appdynamics.com" in the URL).
+1. Choose your storage type. You have two options: local storage using [JSON File Store (JFS)](https://www.npmjs.com/package/jfs) or [Redis](https://redis.io/), a NO-SQL, in-memory data structure store. If you choose to use JFS, you don't have to install anything yourself. If you choose to use Redis you'll need to [download](https://redis.io/download) and install it on your local machine, with the default settings (port 6379).
 
 1. [Optional] Cisco Spark uses a webhook to send incoming messages to your bot, but webhooks require a public IP address. If you don't have one, you can use [ngrok](https://ngrok.com) to create a tunnel to your machine. Launch ngrok to expose port 3000 of your local machine to the internet:
 
-    ```sh
+    ```shell
     ngrok http 3000
     ```
 
@@ -27,9 +33,7 @@ Click below to quickly deploy the bot to Heroku. You will need the following inf
 
 1. [Optional] Open the `.env` file and modify the settings to accomodate your bot.
 
-    _Note that you can also specify any of these settings via env variables. In practice, the values on the command line or in your machine env will prevail over .env file settings_
-
-    To successfully run your bot, you'll need to specify a PUBLIC_URL for your bot, and a Cisco Spark API token (either in the .env settings or via env variables). In the example below, we do not modify any value in settings and specify all configuration values on the command line.
+    _Note that you can also specify any of these settings via env variables. In practice, the values on the command line or in your machine env will prevail over .env file settings. In the example below, we do not modify any value in settings and specify all configuration values on the command line._
 
 1. You're ready to run your bot
 
@@ -40,6 +44,12 @@ From a bash shell, type:
 > cd sparkbot-appd-botkit
 > npm install
 > SPARK_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 node bot.js
+```
+
+If you're using Redis, this last command would be:
+
+```shell
+> SPARK_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 REDIS_URL=redis://localhost:6379/1 node bot.js
 ```
 
 From a windows shell, type:
@@ -55,14 +65,19 @@ From a windows shell, type:
 > node bot.js
 ```
 
+If you're using Redis, you'll need to add an additional environment variable before launching the bot:
+
+```shell
+> set REDIS_URL=redis://localhost:6379/1
+```
+
 where:
 
-- SPARK_TOKEN is the API access token of your Cisco Spark bot
-- PUBLIC_URL is the root URL at which Cisco Spark can reach your bot
-- SECRET is the secret that Cisco Spark uses to sign the JSON webhooks events posted to your bot
-- APPD_ACCOUNT is your AppDynamics account name 
-- [ngrok](http://ngrok.com) helps you expose the bot running on your laptop to the internet, type: `ngrok http 3000` to launch
-
+- SPARK_TOKEN is the API access token of your Cisco Spark bot.
+- PUBLIC_URL is the root URL at which Cisco Spark can reach your bot. If you're using ngrok, this should be the URL ngrok exposes when you run it. 
+- SECRET is the secret that Cisco Spark uses to sign the JSON webhooks events posted to your bot.
+- APPD_ACCOUNT is your AppDynamics account name.
+- REDIS_URL is the URL of the Redis instance you installed.
 
 
 ## Notifications Module

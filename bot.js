@@ -9,9 +9,19 @@
 // Load env variables 
 var env = require('node-env-file');
 env(__dirname + '/.env');
-var AppD = require('./lib/appd.js');
-var storage = require('./lib/storage.js');
 
+var AppD = require('./lib/appd.js');
+
+// Storage
+if (process.env.REDIS_URL) {
+    var redisConfig = { "methods": ['subscriptions'], "url": process.env.REDIS_URL };
+    var storage = require('botkit-storage-redis')(redisConfig);
+    console.log("Using Redis storage at " + process.env.REDIS_URL);
+} else {
+    var jfsStorage = require('./lib/storage.js');
+    var storage = jfsStorage({ path: './jfs' });
+    console.log("Using JFS storage at ./jfs");
+}
 
 //
 // BotKit initialization
@@ -36,8 +46,6 @@ if (!process.env.PUBLIC_URL) {
 }
 
 var env = process.env.NODE_ENV || "development";
-var redisConfig = { "methods": ['subscriptions'], "url": process.env.REDIS_URL };
-var redisStorage = require('botkit-storage-redis')(redisConfig);
 
 var controller = Botkit.sparkbot({
     log: true,
@@ -45,7 +53,7 @@ var controller = Botkit.sparkbot({
     ciscospark_access_token: process.env.SPARK_TOKEN,
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Cisco Spark
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')'),
-    storage: redisStorage
+    storage: storage
 });
 
 var bot = controller.spawn({});
