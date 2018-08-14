@@ -39,7 +39,7 @@ if (!process.env.APPD_ACCOUNT) {
 var appdRESTConfig = {
     "username": process.env.APPD_USERNAME,
     "password": process.env.APPD_PASSWORD,
-    "baseURL": "https://" + process.env.APPD_ACCOUNT + ".saas.appdynamics.com",
+    "baseURL": process.env.APPD_CONTROLLER,
     "event_types": process.env.APPD_EVENT_TYPES
 };
 
@@ -48,9 +48,10 @@ var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
 //Checking AppD API
 appdAPI.applications.getall(function(error, response, body) {
     if (response.statusCode == '200') {
-        console.log("AppDynamics API credentials OK");
+        console.log("AppDynamics: Using AppDynamics controller at " + process.env.APPD_CONTROLLER);
+        console.log("AppDynamics: REST API credentials OK");
     } else if (response.statusCode == '401') {
-        console.log("AppDynamics API credentials are invalid. Please verify username and password.");
+        console.log("AppDynamics: API credentials are invalid. Please verify username and password.");
         process.exit(1);
     } else {
         console.log("There was an unknown problem accessing the AppDyanmics API.");
