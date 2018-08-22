@@ -4,23 +4,11 @@
     "keywords": ["ciscospark", "webex", "chatbot", "botkit"],
     "repository": "https://github.com/AltusConsulting/sparkbot-appd-botkit.git",
     "env": {
-        "APPD_ACCOUNT": {
-            "description": "Your AppDynamics account name. The subdomain of 'saas.appdynamics.com' in the URL of the SaaS version"
-        },
         "PUBLIC_URL": {
             "description": "Internet facing URL where your bot can be reached."
         },
         "BOT_TOKEN": {
             "description": "The API access token of your Webex Teams bot."
-        },
-        "APPD_CONTROLLER": {
-            "description": "The complete URL of your AppDynamics controller (i.e. 'https://blabla12345678.saas.appdynamics.com'"
-        },
-        "APPD_USERNAME": {
-            "description": "The username for your AppD account. This will allow your bot to retrieve data via de API."
-        },
-        "APPD_PASSWORD": {
-            "description": "The password for your AppD account. This will allow your bot to retrieve data via de API."
         }
     },
     "addons": [
