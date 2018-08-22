@@ -137,6 +137,11 @@ controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
         res.json(bot.commons);
     });
 
+    // installing Welcome Page
+    webserver.get('/', function(req, res) {
+        res.send("<html><h2>The Webex Teams bot is running</h2></html>");
+    });
+
     console.log("Webex Teams: healthcheck available at: " + bot.commons.healthcheck);
 });
 
