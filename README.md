@@ -1,19 +1,19 @@
-# Cisco Spark Notification Bot for AppDynamics Using BotKit
+# Webex Teams Notification Bot for AppDynamics Using BotKit
 
-Inspired by [BotKit samples for Cisco Spark](https://github.com/CiscoDevNet/botkit-ciscospark-samples) by Stève Sfartz <mailto:stsfartz@cisco.com>
+Inspired by [BotKit samples for Webex Teams](https://github.com/CiscoDevNet/botkit-webex-samples) by Stève Sfartz <mailto:stsfartz@cisco.com>
 
 ## Instructions for deployment
 
 Either if you deploy locally or to Heroku, you'll need to perform these two tasks first:
 
-1. Create a Bot Account from the ['Spark for developers' bot creation page](https://developer.ciscospark.com/add-bot.html), and copy your bot's access token.
+1. Create a Bot Account from the ['Webex for developers' bot creation page](https://developer.webex.com/add-bot.html), and copy your bot's access token.
 
 1. Create an AppDynamics account if you don't already have one and copy your AppD account name (TIP: for SaaS deployments, the account name is what comes before "saas.appdynamics.com" in the URL).
 
 ## Heroku deployment
 
 Click below to quickly deploy the bot to Heroku. You will need the following information:
-* Your Spark token
+* Your Bot token
 * Your AppDynamics account name
 * Your public URL (for a Heroku deployment this would be `https://{app-name}.herokuapp.com`, where `{app-name}` is the name you chose for your Heroku app).
 
@@ -23,7 +23,7 @@ Click below to quickly deploy the bot to Heroku. You will need the following inf
 
 1. Choose your storage type. You have two options: local storage using [JSON File Store (JFS)](https://www.npmjs.com/package/jfs) or [Redis](https://redis.io/), a NO-SQL, in-memory data structure store. If you choose to use JFS, you don't have to install anything yourself. If you choose to use Redis you'll need to [download](https://redis.io/download) and install it on your local machine, with the default settings (port 6379).
 
-1. [Optional] Cisco Spark uses a webhook to send incoming messages to your bot, but webhooks require a public IP address. If you don't have one, you can use [ngrok](https://ngrok.com) to create a tunnel to your machine. Launch ngrok to expose port 3000 of your local machine to the internet:
+1. [Optional] Webex Teams uses a webhook to send incoming messages to your bot, but webhooks require a public IP address. If you don't have one, you can use [ngrok](https://ngrok.com) to create a tunnel to your machine. Launch ngrok to expose port 3000 of your local machine to the internet:
 
     ```shell
     ngrok http 3000
@@ -43,13 +43,13 @@ From a bash shell, type:
 > git clone https://github.com/AltusConsulting/sparkbot-appd-botkit.git
 > cd sparkbot-appd-botkit
 > npm install
-> SPARK_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 node bot.js
+> BOT_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 node bot.js
 ```
 
 If you're using Redis, this last command would be:
 
 ```shell
-> SPARK_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 REDIS_URL=redis://localhost:6379/1 node bot.js
+> BOT_TOKEN=0123456789abcdef PUBLIC_URL=https://abcdef.ngrok.io SECRET="not that secret" APPD_ACCOUNT=myappdaccount1234567890 REDIS_URL=redis://localhost:6379/1 node bot.js
 ```
 
 From a windows shell, type:
@@ -58,7 +58,7 @@ From a windows shell, type:
 > git clone https://github.com/AltusConsulting/sparkbot-appd-botkit.git
 > cd sparkbot-appd-botkit
 > npm install
-> set SPARK_TOKEN=0123456789abcdef
+> set BOT_TOKEN=0123456789abcdef
 > set PUBLIC_URL=https://abcdef.ngrok.io
 > set SECRET=not that secret
 > set APPD_ACCOUNT=myappdaccount1234567890
@@ -73,16 +73,21 @@ If you're using Redis, you'll need to add an additional environment variable bef
 
 where:
 
-- SPARK_TOKEN is the API access token of your Cisco Spark bot.
-- PUBLIC_URL is the root URL at which Cisco Spark can reach your bot. If you're using ngrok, this should be the URL ngrok exposes when you run it. 
-- SECRET is the secret that Cisco Spark uses to sign the JSON webhooks events posted to your bot.
+- BOT_TOKEN is the API access token of your Webex Teams bot.
+- PUBLIC_URL is the root URL at which Webex Teams can reach your bot. If you're using ngrok, this should be the URL ngrok exposes when you run it. 
+- SECRET is the secret that Webex Teams uses to sign the JSON webhooks events posted to your bot.
 - APPD_ACCOUNT is your AppDynamics account name.
 - REDIS_URL is the URL of the Redis instance you installed.
 
 
+### Testing your bot
+
+To test that your bot is online, add it to your Webex Teams account as you will add any other contact and ask the bot for help with the `help` command.
+
+
 ## Notifications Module
 
-The notifications module allows you to subscribe to specific types of notifications (Errors, Warnings and Informational), so that when your AppDynamics instance detects an event in one of your monitored applications the AppD Bot will send you a message directly via Cisco Spark.
+The notifications module allows you to subscribe to specific types of notifications (Errors, Warnings and Informational), so that when your AppDynamics instance detects an event in one of your monitored applications the AppD Bot will send you a message directly via Webex Teams.
 
 ### Subscribing to a notification
 
@@ -123,6 +128,53 @@ or, for short:
 show sub
 ```
 
+## Interactive Mode
+
+You can interactively query your AppDynamics instance to get information about applications, events and application metrics.
+
+### Show configured applications
+
+You can show the existing configured applications with the following command:
+
+```
+show applications
+```
+or, for short:
+```
+show apps
+```
+The bot will then show a list of the existing applications.
+
+### Show recent events
+
+You can request the recent events for a specific application with the following command:
+
+```
+show events
+```
+or, for short:
+```
+show ev
+```
+
+The bot will then ask for the application for which you want to retrieve the events. Once you answer with one of the available applications the bot will then show a list of the most recent events for that specific application. For the time being this command retrieves events for the last week only. In the future this will be configurable.
+
+
+### Show metrics for an application
+
+You can request the metrics for a specific application with the following command:
+
+```
+show metrics for <app name>
+```
+for example, if there's an application called **MyNodeApp**, the commando should be:
+```
+show metrics for MyNodeApp
+```
+
+The bot will then answer with all the **Overall Application Performance** metrics for the last 60 minutes. In the future, other metrics will be available as well and the time period will be configurable.
+
+
 ## Configuring your AppD server 
 
 In order for notifications to be sent to your bot, you need to configure your AppD server accordingly. Here are the steps:
@@ -132,7 +184,7 @@ In order for notifications to be sent to your bot, you need to configure your Ap
 * Navigate to _Alert & Respond_ -> _HTTP Request Templates_.
 * Select _New_ to create a new template.
 - Fill the information as follows:
-    - **Name**: Something like "Sparkbot" or "Cisco Spark"
+    - **Name**: Something like "Webex Bot" or "Webex Teams"
     - **Method**: POST
     - **Raw URL**: http://<PUBLIC_URL>/appd where PUBLIC_URL is the Internet facing URL where the bot can be reached, as defined in your environment variables
     - **URL Encoding**: UTF-8
@@ -164,7 +216,7 @@ In order for notifications to be sent to your bot, you need to configure your Ap
 * Navigate to _Alert & Respond_ -> _Actions_.
 * Select _Create_ to create a new action.
 * Select _HTTP Request_ -> _Make an HTTP Request_ and the press OK.
-* Assign a name to the request. It can be something like "Cisco Spark Bot"
+* Assign a name to the request. It can be something like "Webex Teams Bot"
 * From the _HTTP Request Template_ dropdown list select the template created in the previous step.
 
 ### 3. Create a __Policy__.
@@ -176,4 +228,4 @@ In order for notifications to be sent to your bot, you need to configure your Ap
 * Press _Next_
 * In _Actions to Execute_ press the plus (+) sign and then select the action you created in the previous step. Press _Select_.
 
-Now you should begin receiving notifications from the AppD Bot on Cisco Spark, once you subscribe to them.
+Now you should begin receiving notifications from the AppD Bot on Webex Teams, once you subscribe to them.
