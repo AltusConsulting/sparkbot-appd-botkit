@@ -167,7 +167,7 @@ You can request the metrics for a specific application with the following comman
 ```
 show metrics for <app name>
 ```
-for example, if there's an application called **MyNodeApp**, the commando should be:
+for example, if there's an application called **MyNodeApp**, the command should be:
 ```
 show metrics for MyNodeApp
 ```
