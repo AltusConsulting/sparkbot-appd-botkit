@@ -12,6 +12,15 @@
         },
         "BOT_TOKEN": {
             "description": "The API access token of your Webex Teams bot."
+        },
+        "APPD_CONTROLLER": {
+            "description": "The complete URL of your AppDynamics controller (i.e. 'https://blabla12345678.saas.appdynamics.com'"
+        },
+        "APPD_USERNAME": {
+            "description": "The username for your AppD account. This will allow your bot to retrieve data via de API."
+        },
+        "APPD_PASSWORD": {
+            "description": "The password for your AppD account. This will allow your bot to retrieve data via de API."
         }
     },
     "addons": [
