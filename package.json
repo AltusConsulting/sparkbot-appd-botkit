@@ -3,11 +3,12 @@
         "start": "node bot.js"
     },
     "name": "sparkbot-appd-botkit",
-    "description": "Cisco Spark notification bot for AppDynamics using BotKit",
+    "description": "Webex Teams notification bot for AppDynamics using BotKit",
     "version": "0.0.1",
     "main": "bot.js",
     "keywords": [
         "ciscospark",
+        "webex",
         "botkit",
         "devnet",
         "appdynamics"
