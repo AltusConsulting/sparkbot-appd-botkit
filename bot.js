@@ -37,12 +37,12 @@ if (process.env.REDIS_URL) {
 //     process.exit(1);
 // }
 
-// var appdRESTConfig = {
-//     "username": process.env.APPD_USERNAME,
-//     "password": process.env.APPD_PASSWORD,
-//     "baseURL": process.env.APPD_CONTROLLER,
-//     "event_types": process.env.APPD_EVENT_TYPES
-// };
+var appdRESTConfig = {
+    "username": process.env.APPD_USERNAME,
+    "password": process.env.APPD_PASSWORD,
+    "baseURL": process.env.APPD_CONTROLLER,
+    "event_types": process.env.APPD_EVENT_TYPES
+};
 
 var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
 
