@@ -91,7 +91,7 @@ var controller = Botkit.sparkbot({
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Webex Teams
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')'),
     storage: storage,
-    appdAPI: appdAPI
+    //appdAPI: appdAPI
 });
 
 var bot = controller.spawn({});
