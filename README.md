@@ -21,7 +21,7 @@ Click below to quickly deploy the bot to Heroku. You will need the following inf
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-**Note**: _Again, if you just need to demostrate the functionality of the bot, you don't need an AppDynamics account. You can just deploy the `demo` branch of this repository to Heroku navigating first to [the demo branch](https://github.com/AltusConsulting/sparkbot-appd-botkit/tree/demo).
+**Note**: _Again, if you just need to demostrate the functionality of the bot, you don't need an AppDynamics account. You can just deploy the `demo` branch of this repository to Heroku navigating first to [the demo branch](https://github.com/AltusConsulting/sparkbot-appd-botkit/tree/demo)_.
 
 ## Local deployment
 
