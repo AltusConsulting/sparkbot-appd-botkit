@@ -21,6 +21,8 @@ Click below to quickly deploy the bot to Heroku. You will need the following inf
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
+**Note**: _Again, if you just need to demostrate the functionality of the bot, you don't need an AppDynamics account. You can just deploy the `demo` branch of this repository to Heroku navigating first to [the demo branch](https://github.com/AltusConsulting/sparkbot-appd-botkit/tree/demo).
+
 ## Local deployment
 
 1. Choose your storage type. You have two options: local storage using [JSON File Store (JFS)](https://www.npmjs.com/package/jfs) or [Redis](https://redis.io/), a NO-SQL, in-memory data structure store. If you choose to use JFS, you don't have to install anything yourself. If you choose to use Redis you'll need to [download](https://redis.io/download) and install it on your local machine, with the default settings (port 6379).
