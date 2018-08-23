@@ -10,6 +10,8 @@ Either if you deploy locally or to Heroku, you'll need to perform these two task
 
 1. Create an AppDynamics account if you don't already have one and copy your AppD account name (TIP: for SaaS deployments, the account name is what comes before "saas.appdynamics.com" in the URL).
 
+**Note**: _If you just need to demostrate the functionality of the bot, you don't need an AppDynamics account. You can just checkout the `demo` branch of this repository and launch a completely stand alone bot with dummy data._
+
 ## Heroku deployment
 
 Click below to quickly deploy the bot to Heroku. You will need the following information:
