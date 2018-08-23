@@ -170,3 +170,27 @@ show metrics for MyNodeApp
 The bot will then answer with all the **Overall Application Performance** metrics for the last 60 minutes. In the future, other metrics will be available as well and the time period will be configurable.
 
 **Note**: _This branch corresponds to a demo bot with fake data. The metric data is being randomly generated and may not make sense._ 
+
+
+# Demo Script
+Following are the suggested steps to perform a demo of this bot. Keep in mind that all data sent by the bot is fake and was created for demo purposes. 
+
+1. Add the bot to your Webex Teams client as a 1:1 chat or to a space. Remember to always mention the bot (@BotName) if you're in a space.
+
+1. Type the `help` command. The bot will respond with all the supported commands.
+
+1. Type the `show subscriptions` command. If this is the first time you interact with the bot you should get _"You don't have any active subscriptions"_ as an answer. If you have previously subscribed to an event type you should get a list of your subscriptions.
+
+1. Type the `subscribe` command in order to subscribe to an event type. Then select whichever type you want (info, warn, error).
+
+1. In your browser, navigate to your `PUBLIC_URL`. There you should se a green button that says "Simulate Events". Press the button once to simulate three events, one of each type. The bot should notify you of only the events your are subscribed to.
+
+1. (Optional) Subscribe to a differenet event type and repeat the previous step so you can show that now the bot notifies you of the new event type.
+
+1. (Optional) Type the `unsubscribe` command to unsubscribe from any of the event types. Then press the "Simulate Events" button to show that the bot no longer sends a notification for that event type.
+
+1. Type the `show applications` command to see what applications are currently being monitored by the AppDynamic instance.
+
+1. Type the `show events` command to retrieve the most recent events that the AppDynamics controller detected. The bot will ask the name of the application you want to see events of (the output will be the same regardless of which app you choose).
+
+1. Type the `show metrics for <app-name>` command. If `<app-name>` doesn't correspond with an existing application the bot will list all the applications and ask you to chooose one. Otherwise it will show right away the metrics for the last 60 minutes of that specific application.
