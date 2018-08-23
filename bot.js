@@ -44,7 +44,7 @@ if (process.env.REDIS_URL) {
 //     "event_types": process.env.APPD_EVENT_TYPES
 // };
 
-// var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
+var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
 
 // //Checking AppD API
 // appdAPI.applications.getall(function(error, response, body) {
@@ -91,7 +91,7 @@ var controller = Botkit.sparkbot({
     secret: process.env.SECRET, // this is a RECOMMENDED security setting that checks of incoming payloads originate from Webex Teams
     webhook_name: process.env.WEBHOOK_NAME || ('built with BotKit (' + env + ')'),
     storage: storage,
-    //appdAPI: appdAPI
+    appdAPI: appdAPI
 });
 
 var bot = controller.spawn({});
