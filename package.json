@@ -22,7 +22,9 @@
             "node": "8.2.1"
         },
         "node-env-file": "0.1.8",
-        "request": "^2.87.0"
+        "path": "^0.12.7",
+        "request": "^2.87.0",
+        "vash": "^0.12.4"
     },
     "devDependencies": {
         "gulp": "^3.9.1",

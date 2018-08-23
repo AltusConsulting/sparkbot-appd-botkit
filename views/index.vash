@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <h2>The AppDynamics Demo bot is running</h2>
+        <p>
+            <h4>Press the button to send dummy event notifications to the bot</h4>
+        </p>
+    </body>
+
+    <a href="#" id="submitButton" class="myButton">Send Events</a>
+
+    <style>
+        .myButton {
+            -moz-box-shadow: 0px 10px 14px -7px #3e7327;
+            -webkit-box-shadow: 0px 10px 14px -7px #3e7327;
+            box-shadow: 0px 10px 14px -7px #3e7327;
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77b55a), color-stop(1, #72b352));
+            background:-moz-linear-gradient(top, #77b55a 5%, #72b352 100%);
+            background:-webkit-linear-gradient(top, #77b55a 5%, #72b352 100%);
+            background:-o-linear-gradient(top, #77b55a 5%, #72b352 100%);
+            background:-ms-linear-gradient(top, #77b55a 5%, #72b352 100%);
+            background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77b55a', endColorstr='#72b352',GradientType=0);
+            background-color:#77b55a;
+            -moz-border-radius:4px;
+            -webkit-border-radius:4px;
+            border-radius:4px;
+            border:1px solid #4b8f29;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:13px;
+            font-weight:bold;
+            padding:10px 23px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #5b8a3c;
+        }
+        .myButton:hover {
+            background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #72b352), color-stop(1, #77b55a));
+            background:-moz-linear-gradient(top, #72b352 5%, #77b55a 100%);
+            background:-webkit-linear-gradient(top, #72b352 5%, #77b55a 100%);
+            background:-o-linear-gradient(top, #72b352 5%, #77b55a 100%);
+            background:-ms-linear-gradient(top, #72b352 5%, #77b55a 100%);
+            background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#72b352', endColorstr='#77b55a',GradientType=0);
+            background-color:#72b352;
+        }
+        .myButton:active {
+            position:relative;
+            top:1px;
+    }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        var API_URL = '@model.publicURL';
+        $('#submitButton').on('click', function() {
+            $.ajax({
+                type: 'POST',
+                url: API_URL,
+                data: JSON.stringify(
+                [
+                    {
+                        "app": "Sample Application Name",
+                        "appid": "42",
+                        "tier": "Sample Tier",
+                        "node": "Sample Node",
+                        "time": "Wed Aug 22 15:54:34 PDT 2018",
+                        "deeplink": "https://turing201807191413585.saas.appdynamics.com/#location=APP_EVENT_VIEWER_MODAL&eventSummary=6177&application=42",
+                        "name": "New Service Endpoint Discovered",
+                        "severity": "INFO",
+                        "message": "Sample Summary Message"
+                    },
+                    {
+                        "app": "Sample Application Name",
+                        "appid": "42",
+                        "tier": "Sample Tier",
+                        "node": "Sample Node",
+                        "time": "Wed Aug 22 15:53:50 PDT 2018",
+                        "deeplink": "https://turing201807191413585.saas.appdynamics.com/#location=APP_EVENT_VIEWER_MODAL&eventSummary=6176&application=42",
+                        "name": "New Warning Health Rule Violation",
+                        "severity": "WARN",
+                        "message": "Sample Summary Message"
+                    },
+                    {
+                        "app": "Sample Application Name",
+                        "appid": "42",
+                        "tier": "Sample Tier",
+                        "node": "Sample Node",
+                        "time": "Wed Aug 22 15:53:38 PDT 2018",
+                        "deeplink": "https://turing201807191413585.saas.appdynamics.com/#location=APP_EVENT_VIEWER_MODAL&eventSummary=6175&application=42",
+                        "name": "New Critical Health Rule Violation",
+                        "severity": "ERROR",
+                        "message": "Sample Summary Message"
+                    }
+                ]),
+                contentType: "application/json",
+                success: function(data) {
+                    //window.location = "http://www.cfe.gob.mx";
+                }
+            });
+            return false;
+        });
+    </script>
+    
+</html>

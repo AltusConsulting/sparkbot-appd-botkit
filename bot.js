@@ -8,6 +8,7 @@
 
 // Load env variables 
 var env = require('node-env-file');
+var path = require('path');
 env(__dirname + '/.env');
 
 var AppD = require('./lib/appd.js');
@@ -24,40 +25,40 @@ if (process.env.REDIS_URL) {
 }
 
 // AppD REST API
-if (!process.env.APPD_USERNAME || !process.env.APPD_PASSWORD) {
-    console.log("No AppDynamics API credentials were provided.");
-    console.log("Please add env variables APPD_USERNAME and APPD_PASSWORD on the command line or to the .env file");
-    process.exit(1);
-}
+// if (!process.env.APPD_USERNAME || !process.env.APPD_PASSWORD) {
+//     console.log("No AppDynamics API credentials were provided.");
+//     console.log("Please add env variables APPD_USERNAME and APPD_PASSWORD on the command line or to the .env file");
+//     process.exit(1);
+// }
 
-if (!process.env.APPD_ACCOUNT) {
-    console.log("No AppDynamics account was provided.");
-    console.log("Please add env variable APPD_ACCOUNT on the command line or to the .env file");
-    process.exit(1);
-}
+// if (!process.env.APPD_ACCOUNT) {
+//     console.log("No AppDynamics account was provided.");
+//     console.log("Please add env variable APPD_ACCOUNT on the command line or to the .env file");
+//     process.exit(1);
+// }
 
-var appdRESTConfig = {
-    "username": process.env.APPD_USERNAME,
-    "password": process.env.APPD_PASSWORD,
-    "baseURL": process.env.APPD_CONTROLLER,
-    "event_types": process.env.APPD_EVENT_TYPES
-};
+// var appdRESTConfig = {
+//     "username": process.env.APPD_USERNAME,
+//     "password": process.env.APPD_PASSWORD,
+//     "baseURL": process.env.APPD_CONTROLLER,
+//     "event_types": process.env.APPD_EVENT_TYPES
+// };
 
-var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
+// var appdAPI = require('./lib/appdapi.js')(appdRESTConfig);
 
-//Checking AppD API
-appdAPI.applications.getall(function(error, response, body) {
-    if (response.statusCode == '200') {
-        console.log("AppDynamics: Using AppDynamics controller at " + process.env.APPD_CONTROLLER);
-        console.log("AppDynamics: REST API credentials OK");
-    } else if (response.statusCode == '401') {
-        console.log("AppDynamics: API credentials are invalid. Please verify username and password.");
-        process.exit(1);
-    } else {
-        console.log("There was an unknown problem accessing the AppDyanmics API.");
-        process.exit(1);
-    }
-});
+// //Checking AppD API
+// appdAPI.applications.getall(function(error, response, body) {
+//     if (response.statusCode == '200') {
+//         console.log("AppDynamics: Using AppDynamics controller at " + process.env.APPD_CONTROLLER);
+//         console.log("AppDynamics: REST API credentials OK");
+//     } else if (response.statusCode == '401') {
+//         console.log("AppDynamics: API credentials are invalid. Please verify username and password.");
+//         process.exit(1);
+//     } else {
+//         console.log("There was an unknown problem accessing the AppDyanmics API.");
+//         process.exit(1);
+//     }
+// });
 
 //
 // BotKit initialization
@@ -138,8 +139,9 @@ controller.setupWebserver(process.env.PORT || 3000, function(err, webserver) {
     });
 
     // installing Welcome Page
-    webserver.get('/', function(req, res) {
-        res.send("<html><h2>The Webex Teams bot is running</h2></html>");
+    webserver.set("view engine","vash");
+    webserver.get('/', function (req, res) {
+       res.render('index', { publicURL: process.env.PUBLIC_URL + "/appd"});
     });
 
     console.log("Webex Teams: healthcheck available at: " + bot.commons.healthcheck);
